@@ -34,44 +34,52 @@ export default Node.create({
 
   renderHTML({ HTMLAttributes }) {
     return ['div', mergeAttributes(HTMLAttributes, {
-      class: 'html-block border border-dashed border-gray-300 p-4 rounded-lg bg-gray-50',
+      class: 'custom-html-content',
       'data-html-content': HTMLAttributes.htmlContent,
-    }), ['div', {
-      innerHTML: HTMLAttributes.htmlContent || '',
-      class: 'html-content'
-    }]];
+    })];
   },
 
   addNodeView() {
     return ({ node, getPos, editor }) => {
       const dom = document.createElement('div');
-      dom.className = 'html-block border border-dashed border-gray-300 p-4 rounded-lg bg-gray-50 relative';
+      dom.className = 'custom-html-content';
       
-      // Create content container
-      const contentContainer = document.createElement('div');
-      contentContainer.className = 'html-content';
-      
-      // Create label
-      const label = document.createElement('div');
-      label.className = 'absolute top-2 left-2 text-xs text-gray-500 bg-white px-2 py-1 rounded';
-      label.textContent = 'HTML';
-      
-      // Set the HTML content
-      if (node.attrs.htmlContent) {
+      // Set the HTML content directly without decorations
+      if (node.attrs.htmlContent && node.attrs.htmlContent.trim()) {
         try {
-          contentContainer.innerHTML = node.attrs.htmlContent;
+          dom.innerHTML = node.attrs.htmlContent;
         } catch (error) {
-          contentContainer.textContent = 'Invalid HTML';
-          contentContainer.className += ' text-red-500';
+          dom.textContent = 'Invalid HTML: ' + error.message;
+          dom.className += ' text-red-500';
         }
       }
       
-      dom.appendChild(label);
-      dom.appendChild(contentContainer);
-      
       return {
         dom,
-        contentDOM: null, // This prevents Tiptap from trying to manage content
+        contentDOM: null,
+        update: (updatedNode) => {
+          if (updatedNode.type !== node.type) {
+            return false;
+          }
+          
+          // Update content when node changes
+          if (updatedNode.attrs.htmlContent !== node.attrs.htmlContent) {
+            if (updatedNode.attrs.htmlContent && updatedNode.attrs.htmlContent.trim()) {
+              try {
+                dom.innerHTML = updatedNode.attrs.htmlContent;
+                dom.className = 'custom-html-content';
+              } catch (error) {
+                dom.textContent = 'Invalid HTML: ' + error.message;
+                dom.className = 'custom-html-content text-red-500';
+              }
+            } else {
+              dom.innerHTML = '';
+              dom.className = 'custom-html-content';
+            }
+          }
+          
+          return true;
+        }
       };
     };
   },

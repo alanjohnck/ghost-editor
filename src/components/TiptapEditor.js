@@ -447,75 +447,64 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
       {showToolMenu && (
         <div
           ref={toolMenuRef}
-          className="absolute z-50 bg-[#F4F4F5] border border-gray-300 rounded-lg shadow-lg py-2 tool-menu"
+          className="absolute z-50 bg-white border border-gray-300 rounded-lg shadow-lg py-2 w-48 tool-menu"
           style={{
             left: toolMenuPosition.x,
             top: toolMenuPosition.y,
-            width: '192px', // Fixed width (w-48 = 192px)
           }}
         >
           <div className="space-y-1">
             <button
               onClick={() => insertContent('image-upload')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                <circle cx="9" cy="9" r="2"/>
-                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-              </svg>
-              <span>Photo</span>
-            </button>
-            <button
-              onClick={() => insertContent('youtube-embed')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
-                <polygon points="9.75,15.02 15.5,11.75 9.75,8.48"/>
-              </svg>
-              <span>YouTube</span>
-            </button>
-            <button
-              onClick={() => insertContent('bookmark-embed')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
-              </svg>
-              <span>Bookmark</span>
+              <img src="/media.png" alt="Media" width={16} height={16} className="opacity-70" />
+              <span>Media</span>
             </button>
             <button
               onClick={() => insertContent('html-embed')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-70">
                 <polyline points="16,18 22,12 16,6"/>
                 <polyline points="8,6 2,12 8,18"/>
               </svg>
               <span>HTML</span>
             </button>
             <button
-              onClick={() => insertContent('unsplash-embed')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M9 10h6v4H9v-4z"/>
-                <path d="M21 6H3v12h18V6z"/>
-                <path d="M7 2l5 4 5-4"/>
-              </svg>
-              <span>Unsplash</span>
-            </button>
-            <hr className="my-1 border-gray-200" />
-            <button
               onClick={() => insertContent('divider')}
-              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3"
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-70">
                 <line x1="3" y1="12" x2="21" y2="12"/>
               </svg>
               <span>Divider</span>
             </button>
+            <button
+              onClick={() => insertContent('bookmark-embed')}
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
+            >
+              <img src="/bookmark.png" alt="Bookmark" width={16} height={16} className="opacity-70" />
+              <span>Bookmark</span>
+            </button>
+             <button
+              onClick={() => insertContent('youtube-embed')}
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
+            >
+              <img src="/youtube.png" alt="YouTube" width={16} height={16} className="opacity-70" />
+              <span>YouTube</span>
+            </button>
+            <button
+              onClick={() => insertContent('unsplash-embed')}
+              className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center space-x-3 transition-colors duration-200"
+            >
+              <img src="/unsplash.png" alt="Unsplash" width={16} height={16} className="opacity-70" />
+              <span>Unsplash</span>
+            </button>
+           
+            
+            
+            
           </div>
         </div>
       )}
@@ -545,13 +534,14 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
                 value={embedUrl}
                 onChange={(e) => setEmbedUrl(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key === 'Enter' && e.ctrlKey) {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
                     handleEmbedSubmit();
                   } else if (e.key === 'Escape') {
                     handleEmbedCancel();
                   }
                 }}
-                placeholder="Paste HTML code... (Ctrl+Enter to submit)"
+                placeholder="Paste HTML code... (Enter to submit)"
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-transparent resize-none font-mono text-sm"
                 rows="6"
                 autoFocus

@@ -108,7 +108,7 @@ export default function EditorPage() {
   return (
     <div className="min-h-screen bg-[#F4F4F5] flex flex-col editor-page">
       {/* Header */}
-      <div className="border-gray-200 p-4 sm:p-[20px] flex-shrink-0 editor-header">
+      <div className="border-gray-200 p-2 md:p-[20px] flex-shrink-0 editor-header">
         <div className="w-full max-w-[500px] md:max-w-[1238px] mx-auto">
           <div className="flex items-center justify-between flex-wrap gap-2 sm:gap-4">
             <div className="flex items-center gap-2 sm:gap-4">

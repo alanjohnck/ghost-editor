@@ -185,6 +185,41 @@ body {
   margin: 0 auto;
 }
 
+/* Custom HTML Content - Clean rendering without decorations */
+.custom-html-content {
+  margin: 1em 0;
+}
+
+.custom-html-content * {
+  max-width: 100% !important;
+}
+
+.custom-html-content iframe,
+.custom-html-content video,
+.custom-html-content embed,
+.custom-html-content object {
+  max-width: 100%;
+  height: auto;
+}
+
+.custom-html-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-html-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tool menu hover effects */
+.tool-menu button:hover img,
+.tool-menu button:hover svg {
+  opacity: 1 !important;
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   /* Editor page specific responsive styles */
@@ -226,7 +261,9 @@ body {
   
   /* Tool menus */
   .tool-menu {
-    width: 192px !important; /* Fixed width regardless of position */
+    width: min(48rem, calc(100vw - 2rem)) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
   
   /* Format menu */
@@ -270,7 +307,7 @@ body {
 /* Tablet styles */
 @media (max-width: 1024px) and (min-width: 769px) {
   .tool-menu {
-    width: 192px !important; /* Keep fixed width on tablet */
+    width: min(48rem, 85vw) !important;
   }
   
   .embed-input {
