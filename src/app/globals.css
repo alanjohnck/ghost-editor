@@ -226,9 +226,7 @@ body {
   
   /* Tool menus */
   .tool-menu {
-    width: min(48rem, calc(100vw - 2rem)) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    width: 192px !important; /* Fixed width regardless of position */
   }
   
   /* Format menu */
@@ -272,7 +270,7 @@ body {
 /* Tablet styles */
 @media (max-width: 1024px) and (min-width: 769px) {
   .tool-menu {
-    width: min(48rem, 85vw) !important;
+    width: 192px !important; /* Keep fixed width on tablet */
   }
   
   .embed-input {

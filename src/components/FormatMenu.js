@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { 
   Bold, 
   Italic, 
@@ -11,6 +11,9 @@ import {
 
 const FormatMenu = ({ editor, position, onClose }) => {
   const menuRef = useRef(null);
+  const linkInputRef = useRef(null);
+  const [showLinkInput, setShowLinkInput] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -22,6 +25,36 @@ const FormatMenu = ({ editor, position, onClose }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose]);
+
+  useEffect(() => {
+    if (showLinkInput && linkInputRef.current) {
+      linkInputRef.current.focus();
+    }
+  }, [showLinkInput]);
+
+  const handleLinkSubmit = () => {
+    if (linkUrl.trim()) {
+      editor.chain().focus().setLink({ href: linkUrl.trim() }).run();
+    }
+    setLinkUrl('');
+    setShowLinkInput(false);
+    onClose();
+  };
+
+  const handleLinkCancel = () => {
+    setLinkUrl('');
+    setShowLinkInput(false);
+  };
+
+  const handleLinkKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleLinkSubmit();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      handleLinkCancel();
+    }
+  };
 
   const formatButtons = [
     {
@@ -140,12 +173,7 @@ const FormatMenu = ({ editor, position, onClose }) => {
       icon: () => <img src="/attachments.png" alt="Link" width={18} height={14} />,
       label: 'Link',
       isActive: () => editor.isActive('link'),
-      onClick: () => {
-        const url = window.prompt('Enter URL:');
-        if (url) {
-          editor.chain().focus().setLink({ href: url }).run();
-        }
-      },
+      onClick: () => setShowLinkInput(true),
     },
   ];
 
@@ -159,20 +187,34 @@ const FormatMenu = ({ editor, position, onClose }) => {
         transform: 'translateX(-50%) translateY(-100%)',
       }}
     >
-      <div className="flex items-center gap-1 flex-wrap">
-        {formatButtons.map((button, index) => (
-          <button
-            key={index}
-            onClick={button.onClick}
-            className={`p-2 rounded-md transition-colors hover:bg-[#F3F4F6] ${
-              button.isActive() ? 'bg-[#F3F4F6] text-black' : 'text-gray-600'
-            }`}
-            title={button.label}
-          >
-            <button.icon size={16} />
-          </button>
-        ))}
-      </div>
+      {showLinkInput ? (
+        <div className="p-2">
+          <input
+            ref={linkInputRef}
+            type="text"
+            placeholder="Enter URL and press Enter"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={handleLinkKeyPress}
+            className="w-full px-3 py-2  rounded-md text-sm focus:outline-none focus:border-transparent"
+          />
+        </div>
+      ) : (
+        <div className="flex items-center gap-1 flex-wrap">
+          {formatButtons.map((button, index) => (
+            <button
+              key={index}
+              onClick={button.onClick}
+              className={`p-2 rounded-md transition-colors hover:bg-[#F3F4F6] ${
+                button.isActive() ? 'bg-[#F3F4F6] text-black' : 'text-gray-600'
+              }`}
+              title={button.label}
+            >
+              <button.icon size={16} />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -447,10 +447,11 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
       {showToolMenu && (
         <div
           ref={toolMenuRef}
-          className="absolute z-50 bg-[#F4F4F5] border border-gray-300 rounded-lg shadow-lg py-2 w-48 tool-menu"
+          className="absolute z-50 bg-[#F4F4F5] border border-gray-300 rounded-lg shadow-lg py-2 tool-menu"
           style={{
             left: toolMenuPosition.x,
             top: toolMenuPosition.y,
+            width: '192px', // Fixed width (w-48 = 192px)
           }}
         >
           <div className="space-y-1">

@@ -151,7 +151,7 @@ export default function EditorPage() {
               />
               <button
                 onClick={() => handleImageUpload(null)}
-                className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white bg-black bg-opacity-50 hover:bg-opacity-75 cursor-pointer p-1.5 sm:p-2 rounded-full transition-colors"
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 text-white bg-opacity-50 hover:bg-opacity-75 cursor-pointer p-1.5 sm:p-2 rounded-full transition-colors"
               >
                 ×
               </button>
