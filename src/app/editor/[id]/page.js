@@ -131,7 +131,14 @@ export default function EditPostPage() {
                 <img src="/back.png" className='w-[18px] h-[18px] cursor-pointer'></img>
               </button>
               <span className="text-sm text-black text-[14px] sm:text-[16px] font-medium">Posts</span>
-              <span className="text-xs sm:text-sm text-gray-500">{saveStatus}</span>
+              <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap truncate">
+                <span className="sm:hidden">
+                  {saveStatus.includes('Saved') ? 'Saved' : saveStatus.replace('Draft - ', '')}
+                </span>
+                <span className="hidden sm:inline">
+                  {saveStatus}
+                </span>
+              </span>
             </div>
 
             <div className="flex items-center  sm:gap-2 md:gap-3 header-buttons">

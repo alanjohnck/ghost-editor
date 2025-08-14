@@ -110,19 +110,27 @@ export default function EditorPage() {
       {/* Header */}
       <div className="border-gray-200 p-[5px] md:p-[20px] flex-shrink-0 editor-header">
         <div className="w-full max-w-[500px] md:max-w-[1238px] mx-auto">
-          <div className="flex items-center justify-between flex-wrap gap-2 sm:gap-4">
-            <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center justify-between gap-1 sm:gap-4">
+            <div className="flex items-center gap-1 sm:gap-4 min-w-0 flex-shrink">
               <button
                 onClick={handleBack}
-                className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-md transition-colors flex-shrink-0"
               >
                 <img src="./back.png" className='w-[18px] h-[18px] cursor-pointer'></img>
               </button>
-              <span className="text-sm text-black text-[14px] sm:text-[16px] font-medium">Posts</span>
-              <span className="text-xs sm:text-sm text-gray-500">{saveStatus}</span>
+              <span className="text-sm text-black text-[14px] sm:text-[16px] font-medium whitespace-nowrap">Posts</span>
+              {/* Mobile: Show "Saved", Desktop: Show "Draft - Saved" */}
+              <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap truncate">
+                <span className="sm:hidden">
+                  {saveStatus.includes('Saved') ? 'Saved' : saveStatus.replace('Draft - ', '')}
+                </span>
+                <span className="hidden sm:inline">
+                  {saveStatus}
+                </span>
+              </span>
             </div>
 
-            <div className="flex items-center  sm:gap-2 md:gap-3 header-buttons">
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-3 header-buttons flex-shrink-0">
               <button className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-md transition-colors">
                 <img src='./window.png' className='w-[16px] h-[16px]'></img>
               </button>
