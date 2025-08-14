@@ -31,6 +31,7 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
   const [showUnsplashPicker, setShowUnsplashPicker] = useState(false);
   const [showImageUpload, setShowImageUpload] = useState(false);
   const [imageUploadPosition, setImageUploadPosition] = useState({ x: 0, y: 0 });
+  const [hoveredLine, setHoveredLine] = useState(null);
 
   // Refs for click outside detection
   const toolMenuRef = useRef(null);
@@ -169,8 +170,12 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
             y: coords.top - rect.top,
           });
           setShowPlusButton(true);
+          setHoveredLine(null); // Clear hover state when cursor is active
         } else {
-          setShowPlusButton(false);
+          // Only hide if we're not in a hover state
+          if (!hoveredLine) {
+            setShowPlusButton(false);
+          }
         }
       }
     },
@@ -209,6 +214,62 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
         }
         
         return false;
+      },
+      handleDOMEvents: {
+        mousemove: (view, event) => {
+          // Don't show plus button on hover if tool menu is open or text is selected
+          if (showToolMenu || showFormatMenu || !view.state.selection.empty) {
+            return false;
+          }
+
+          const pos = view.posAtCoords({ left: event.clientX, top: event.clientY });
+          if (pos) {
+            const { state } = view;
+            const resolvedPos = state.doc.resolve(pos.pos);
+            const currentNode = resolvedPos.parent;
+            
+            // Check if we're hovering over an empty paragraph
+            const isEmptyParagraph = currentNode.type.name === 'paragraph' && currentNode.content.size === 0;
+            
+            if (isEmptyParagraph && !showPlusButton) {
+              const coords = view.coordsAtPos(pos.pos);
+              const rect = view.dom.getBoundingClientRect();
+              
+              setPlusButtonPosition({
+                x: window.innerWidth <= 768 ? 20 : coords.left - rect.left - 60,
+                y: coords.top - rect.top,
+              });
+              setShowPlusButton(true);
+              setHoveredLine(pos.pos);
+            } else if (!isEmptyParagraph && hoveredLine && showPlusButton) {
+              // Hide plus button when moving away from empty line (unless cursor is in it)
+              const { selection } = state;
+              const { $from } = selection;
+              const cursorNode = $from.parent;
+              const isCursorInEmptyLine = cursorNode.type.name === 'paragraph' && cursorNode.content.size === 0;
+              
+              if (!isCursorInEmptyLine) {
+                setShowPlusButton(false);
+                setHoveredLine(null);
+              }
+            }
+          }
+          return false;
+        },
+        mouseleave: (view, event) => {
+          // Hide plus button when mouse leaves editor area (unless cursor is in empty line)
+          const { state } = view;
+          const { selection } = state;
+          const { $from } = selection;
+          const cursorNode = $from.parent;
+          const isCursorInEmptyLine = cursorNode.type.name === 'paragraph' && cursorNode.content.size === 0;
+          
+          if (!isCursorInEmptyLine && hoveredLine) {
+            setShowPlusButton(false);
+            setHoveredLine(null);
+          }
+          return false;
+        },
       },
     },
   });
@@ -335,7 +396,14 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
   };
 
   const handlePlusButtonClick = () => {
+    // If we're in a hover state, move cursor to the hovered line
+    if (hoveredLine) {
+      editor.commands.setTextSelection(hoveredLine);
+      editor.commands.focus();
+    }
+    
     setShowPlusButton(false);
+    setHoveredLine(null);
     
     // Position the tool menu relative to the plus button
     setToolMenuPosition({

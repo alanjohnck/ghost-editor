@@ -108,7 +108,7 @@ export default function EditorPage() {
   return (
     <div className="min-h-screen bg-[#F4F4F5] flex flex-col editor-page">
       {/* Header */}
-      <div className="border-gray-200 p-2 md:p-[20px] flex-shrink-0 editor-header">
+      <div className="border-gray-200 p-[5px] md:p-[20px] flex-shrink-0 editor-header">
         <div className="w-full max-w-[500px] md:max-w-[1238px] mx-auto">
           <div className="flex items-center justify-between flex-wrap gap-2 sm:gap-4">
             <div className="flex items-center gap-2 sm:gap-4">
@@ -141,9 +141,9 @@ export default function EditorPage() {
       <div className="flex-1 ">
         <div className="w-full mx-auto flex flex-col justify-center items-center py-4 sm:py-6">
         {/* Featured Image Upload Area */}
-        <div className="mb-[15px] sm:mb-[20px] w-[calc(100vw-2rem)] sm:w-full max-w-[800px] h-[250px] sm:h-[300px] bg-[#F9FAFB] featured-image-container mx-4 sm:mx-0">
+        <div className="mb-[15px] sm:mb-[20px] w-full sm:w-full max-w-none sm:max-w-[800px] h-[250px] sm:h-[300px] bg-[#F9FAFB] featured-image-container mx-0 sm:mx-0">
           {featuredImage ? (
-            <div className="w-full h-full relative rounded-lg overflow-hidden">
+            <div className="w-full h-full relative rounded-none sm:rounded-lg overflow-hidden">
               <img
                 src={featuredImage}
                 alt="Featured"
@@ -159,7 +159,7 @@ export default function EditorPage() {
           ) : (
             <div
               onClick={() => fileInputRef.current.click()}
-              className="w-full h-full border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-12 text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center justify-center"
+              className="w-full h-full border-2 border-dashed border-gray-300 rounded-none sm:rounded-lg p-6 sm:p-12 text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center justify-center"
             >
               <div className="h-[16px] sm:h-[20px] w-[14px] sm:w-[18px] mb-3 sm:mb-[16px]">
                 <img className='w-full h-full' src="./upload.png" alt="Upload" />
@@ -184,12 +184,12 @@ export default function EditorPage() {
 
         {/* Title Input */}
        <div className='w-full flex flex-col items-center'>
-        <div className='w-[calc(100vw-2rem)] sm:w-full max-w-[700px]    px-4 sm:px-0 editor-content-container'>
+        <div className='w-full min-h-[40px] max-w-[700px] px-4 sm:px-0 editor-content-container'>
           <textarea
           value={title}
           onChange={(e) => handleTitleChange(e.target.value)}
           placeholder="Post title"
-          className="w-full text-left  resize-none text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold placeholder-gray-400 border-none outline-none  sm:mb-6 bg-transparent overflow-hidden"
+          className="w-full min-h-[40px] text-left  resize-none text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold placeholder-gray-400 border-none outline-none  bg-transparent overflow-hidden"
           style={{
             lineHeight: '1.1',
             wordWrap: 'break-word',

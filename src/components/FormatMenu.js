@@ -101,12 +101,7 @@ const FormatMenu = ({ editor, position, onClose }) => {
       isActive: () => editor.isActive('heading', { level: 3 }),
       onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
     },
-    {
-      icon: () => <img src="/quotes.png" alt="Quote" width={15} height={11} />,
-      label: 'Quote',
-      isActive: () => editor.isActive('blockquote'),
-      onClick: () => editor.chain().focus().toggleBlockquote().run(),
-    },
+    
     {
       icon: () => (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -169,6 +164,12 @@ const FormatMenu = ({ editor, position, onClose }) => {
     //   isActive: () => editor.isActive('codeBlock'),
     //   onClick: () => editor.chain().focus().toggleCodeBlock().run(),
     // },
+    {
+      icon: () => <img src="/quotes.png" alt="Quote" width={15} height={11} />,
+      label: 'Quote',
+      isActive: () => editor.isActive('blockquote'),
+      onClick: () => editor.chain().focus().toggleBlockquote().run(),
+    },
     {
       icon: () => <img src="/attachments.png" alt="Link" width={18} height={14} />,
       label: 'Link',
