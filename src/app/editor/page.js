@@ -162,7 +162,7 @@ export default function EditorPage() {
               className="w-full h-full border-2 border-dashed border-gray-300 rounded-none sm:rounded-lg p-6 sm:p-12 text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center justify-center"
             >
               <div className="h-[16px] sm:h-[20px] w-[14px] sm:w-[18px] mb-3 sm:mb-[16px]">
-                <img className='w-full h-full' src="./upload.png" alt="Upload" />
+                <img className='w-full h-full' src="/upload.png" alt="Upload" />
               </div>
               <p className="text-xs sm:text-sm mb-2 text-gray-400">
                   <span className='font-bold text-gray-500'>Click to upload post cover</span> or drag and drop              

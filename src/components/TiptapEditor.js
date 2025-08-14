@@ -647,13 +647,13 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
       {/* Image Upload Component */}
       {showImageUpload && (
         <div
-          className="absolute z-50"
+          className="absolute z-50 "
           style={{
             left: imageUploadPosition.x,
             top: imageUploadPosition.y,
           }}
         >
-          <div className="mb-[20px] w-[800px] h-[300px] bg-[#F9FAFB] rounded-lg shadow-lg border border-gray-200 image-upload-component">
+          <div className="mb-[20px] w-[700px] h-[300px] bg-[#F9FAFB] rounded-lg shadow-lg border border-gray-200 image-upload-component">
             <div
               onClick={() => fileInputRef.current?.click()}
               className="w-full h-full border-2 border-dashed border-gray-300 rounded-lg p-12 text-center cursor-pointer hover:bg-gray-50 flex flex-col items-center justify-center"
@@ -680,7 +680,7 @@ const TiptapEditor = ({ content, onChange,placeholder }) => {
             {/* Close button */}
             <button
               onClick={() => setShowImageUpload(false)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 rounded-full w-8 h-8 flex items-center justify-center "
             >
               ×
             </button>

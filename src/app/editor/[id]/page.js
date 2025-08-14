@@ -153,7 +153,7 @@ export default function EditPostPage() {
       <div className="flex-1 ">
         <div className="w-full mx-auto flex flex-col justify-center items-center py-4 sm:py-6">
         {/* Featured Image Upload Area */}
-        <div className="mb-[15px] sm:mb-[20px] w-[calc(100vw-2rem)] sm:w-full max-w-[800px] h-[250px] sm:h-[300px] bg-[#F9FAFB] featured-image-container mx-4 sm:mx-0">
+        <div className="mb-[15px] sm:mb-[20px] w-[calc(100vw-2rem)] sm:w-full max-w-[700px] h-[250px] sm:h-[300px] bg-[#F9FAFB] featured-image-container mx-4 sm:mx-0">
           {featuredImage ? (
             <div className="w-full h-full relative rounded-lg overflow-hidden">
               <img
