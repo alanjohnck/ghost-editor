@@ -1,103 +1,126 @@
-import Image from "next/image";
-
+'use client';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { Search, Plus, Edit, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { deletePost } from '@/store/postsSlice';
+import { useDispatch } from 'react-redux';
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const posts = useSelector(state => state.posts.posts);
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const filteredPosts = posts.filter(post =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleNewPost = () => {
+    router.push('/editor');
+  };
+
+  const handleEditPost = (postId) => {
+    router.push(`/editor/${postId}`);
+  };
+
+  const formatTimeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+    
+    if (diffInMinutes < 1) return 'Just now';
+    if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)} hours ago`;
+    return `${Math.floor(diffInMinutes / 1440)} days ago`;
+  };
+
+  const dispatch = useDispatch();
+
+  return (
+    <div className="min-h-screen bg-white p-4 sm:p-[40px]">
+      {/* Header */}
+      <div className="">
+        <div className=" flex flex-col gap-4 mx-auto">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Posts</h1>
+          </div>
+          
+          {/* Search Bar */}
+          <div className='flex flex-col md:flex-row justify-between relative gap-4 md:gap-6'>
+           <div className="relative flex-1 md:flex-none">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+            <input
+              type="text"
+              placeholder="Search Posts"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full md:w-[419px] h-[36px] pl-10 pr-4 py-2 border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+           </div>
+           <button
+              onClick={handleNewPost}
+              className="w-full md:w-[87px] h-[34px] flex items-center justify-center gap-2 bg-black text-white px-4 py-1 rounded-[7px] text-[12px]"
+            >
+              New post
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* Posts List */}
+      <div className="max-w-full mt-[33px] ">
+        {filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No posts found</p>
+          </div>
+        ) : (
+          <div className="">
+            {filteredPosts.map((post) => (
+              <div
+                key={post.id}
+                className="bg-white  border-t border-t-gray-200   cursor-pointer group"
+                onClick={() => handleEditPost(post.id)}
+              >
+                <div className="flex items-center justify-center">
+                  <div className="flex-1 flex-col py-[12px] ">
+                    <h2 className="text-xl font-semibold text-gray-900 group-hover:text-green-600">
+                      {post.title}
+                    </h2>
+                    <div 
+                      className="text-gray-600 text-sm my-[4px]"
+                      dangerouslySetInnerHTML={{ 
+                        __html: post.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' 
+                      }}
+                    />
+                    <p className="text-xs text-gray-400">
+                      {formatTimeAgo(post.updatedAt)}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 ">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEditPost(post.id);
+                      }}
+                      className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded"
+                    >
+                      <Edit size={16} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(deletePost(post.id));
+                      }}
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

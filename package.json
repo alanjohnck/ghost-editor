@@ -9,15 +9,34 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "@tiptap/extension-bullet-list": "^3.2.0",
+    "@tiptap/extension-code-block": "^3.2.0",
+    "@tiptap/extension-horizontal-rule": "^3.1.0",
+    "@tiptap/extension-image": "^3.1.0",
+    "@tiptap/extension-link": "^3.1.0",
+    "@tiptap/extension-list-item": "^3.2.0",
+    "@tiptap/extension-ordered-list": "^3.2.0",
+    "@tiptap/extension-placeholder": "^3.1.0",
+    "@tiptap/extension-text-style": "^3.1.0",
+    "@tiptap/extension-underline": "^3.1.0",
+    "@tiptap/extension-youtube": "^3.1.0",
+    "@tiptap/pm": "^3.1.0",
+    "@tiptap/react": "^3.1.0",
+    "@tiptap/starter-kit": "^3.1.0",
+    "lodash.debounce": "^4.0.8",
+    "lucide-react": "^0.539.0",
+    "next": "15.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.6"
+    "react-redux": "^9.2.0",
+    "tiptap-extension-font-size": "^1.2.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }
